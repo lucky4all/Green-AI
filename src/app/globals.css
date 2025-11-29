@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@plugin '@midudev/tailwind-animations';
+
+
+@layer theme {
+  .gradient {
+    @apply bg-linear-to-r from-black to-green-500 text-transparent bg-clip-text inline-block
+  }
+  .gradient-title {
+    @apply bg-linear-to-r from-white to-white text-transparent bg-clip-text inline-block
+  
+  }
+}
+
+@layer components {
+  ul > .list {
+    @apply bg-transparent border border-black text-black hover:scale-105 transition-all hover:bg-white cursor-pointer px-15 py-2 rounded font-bold
+  }
+}
+
+body {
+  background-color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
