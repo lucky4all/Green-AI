@@ -6,13 +6,12 @@ export const metadata: Metadata = {
   description: "Corrige tus textos en español de manera rápida y precisa con Green AI, el corrector gramatical impulsado por inteligencia artificial.",
   icons: {
     icon: "/favicon.png",
-  }/*,
+  },
   openGraph: {
-    images: "/greenAI.png",
     type: "website",
     title: "Green AI - Corrector gramatical",
     description: "Corrige tus textos en español de manera rápida y precisa con Green AI, el corrector gramatical impulsado por inteligencia artificial.",
-  },*/
+  }
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
