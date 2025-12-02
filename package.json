@@ -12,6 +12,7 @@
     "@midudev/tailwind-animations": "^0.2.0",
     "@toon-format/toon": "^2.0.1",
     "@vercel/blob": "^2.0.0",
+    "@vercel/firewall": "^1.1.1",
     "ai": "^5.0.104",
     "jsonwebtoken": "^9.0.2",
     "next": "16.0.5",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
