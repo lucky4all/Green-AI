@@ -1,7 +1,9 @@
+import { MouseEventHandler } from "react"
+
 export interface DefaultButtonProps {
     message: string
 }
 
-export interface GitHubProps extends DefaultButtonProps {
-    stars: number
+export interface AIButtonProps extends DefaultButtonProps {
+    onClick: MouseEventHandler<HTMLButtonElement>
 }
