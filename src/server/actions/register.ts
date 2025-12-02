@@ -2,10 +2,7 @@
 import { JWTService } from "@/lib/jwt"
 import { cookies } from "next/headers"
 import sanitizeHtml from 'sanitize-html'
-
-type Payload = {
-    username: string
-}
+import Payload from "@/schema/payload.schema"
 
 export default async function registerUser(payload: Payload) {
     let date = new Date(Date.now() + 1000 * 60 * 60 * 24 * 90) // 90 days
