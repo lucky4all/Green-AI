@@ -1,25 +1,31 @@
 "use client"
 import registerUser from "@/server/actions/register"
 import { useState } from "react"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { registry } from "zod"
 
-type Inputs = {
-    username: string
-}
 export default function AuthPage() {
-    const { register, handleSubmit } = useForm<Inputs>();
+    const [username, setUsername] = useState('')
 
-    /* TO - DO */
-    const submit:SubmitHandler<Inputs> = (data) => {
-        let payload = JSON.stringify(data)
-        //registerUser(payload)
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        
+        try {
+           let payload = { username: username }
+           let operation = await registerUser(payload)
+           if (!operation) {
+             throw new Error("No se ha podido registrar al usuario")
+           }
+        } catch(error) {
+            console.error(error)
+            return
+        }     
+
     }
+    
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex items-center justify-center mt-[25vh]">
+        <form onSubmit={(e) => handleSubmit(e)} className="flex items-center justify-center mt-[25vh]">
             <div className="w-80 rounded-2xl bg-white border border-black">
                 <div className="flex flex-col gap-2 p-8">
-                    <input {...register("username")} type="text" placeholder="Usuario" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
+                    <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Usuario" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
                     <label className="flex cursor-pointer items-center justify-between p-1">
                         Aceptar terminos de uso
                         <div className="relative inline-block">
