@@ -1,31 +1,45 @@
 "use client"
 import { AIButton, DefaultButton } from "@/components/buttons"
-import { geist, montserrat, raleway } from "@/lib/fonts"
+import { geist, montserrat, raleway, ubuntu, nunito } from "@/lib/fonts"
 import text from "@/utils/example-test"
-import { useState, useContext } from "react"
-import Spinner from "@/components/spinner"
-import Link from "next/link"
-import { StateContext } from "@/lib/hooks/stateContext"
+import { useState } from "react"
+import { MouseEventHandler } from "react"
 
 export default function AiPage() {
 
     const [message, setMessage] = useState('');
-    const [renderResult, setRenderResult] = useState(true)
-    const render = useContext(StateContext)
-
+    const [renderResult, setRenderResult] = useState(false);
+    const [info, setInfo] = useState<any>(null)
+    const [loading, setLoading] = useState(false)
     const handleClick = async (): Promise<Object | void> => {
-        let response = await fetch("/api/service", { method: "POST", body: JSON.stringify({ prompt: message }) })
-        let data = await response.json()
-        console.log(data)
+        try {
+            setLoading(true)
+            let response = await fetch("/api/service", { method: "POST", body: JSON.stringify({ prompt: message }), headers: { "Content-Type": "application/json" } })
+            let data = await response.json()
+            if (!response.ok) {
+                throw new Error
+            }
+            setInfo(data)
+            setLoading(false)
+            setRenderResult(true)
+
+        } catch (error) {
+            console.error("Error al conectar con el servicio de IA", error)
+            return
+        }
     }
+
     if (renderResult) {
         return (
-            <StateContext.Provider value={render}>
-               <GrammarToast /> 
-            </StateContext.Provider>
-            
+            <GrammarToast text={message} corrected={info.response} observations="Ninguna." onBack={() => setRenderResult(false)} />
         )
     }
+    if (loading) {
+        return (
+            <LoadingPage />
+        )
+    }
+    
     return (
         <>
             <main className="flex flex-col items-center justify-center mt-[25vh]">
@@ -35,7 +49,7 @@ export default function AiPage() {
                     <div className="input">
 
                         <div className="flex flex-col items-center justify-center h-full gap-y-4">
-                            <textarea onChange={(e) => setMessage(e.target.value)} maxLength={500} className="search" placeholder={text} defaultValue={""} />
+                            <textarea onChange={(e) => setMessage(e.target.value)} maxLength={500} className="search" placeholder={text} />
                             <AIButton onClick={handleClick} message="Corregir" />
                         </div>
 
@@ -47,14 +61,15 @@ export default function AiPage() {
     )
 }
 
-export function GrammarToast() {
+
+export function GrammarToast({ onBack, text, corrected, observations }: { onBack: MouseEventHandler<HTMLButtonElement>, text: any, corrected: string, observations?: string }) {
     return (
         <main className={raleway.className}>
             <div className="text-center mt-[25vh]">
-              <h1 className={`${montserrat.className} text-4xl`}>Aquí tienes tu correción! Gracias por usar nuestro servicio </h1>  
+                <h1 className={`${montserrat.className} text-4xl`}>Aquí tienes tu corrección! Gracias por usar nuestro servicio </h1>
             </div>
             <div className="flow-root mt-5">
-                
+
                 <dl className="divide-y divide-gray-200 text-sm">
                     <div className="grid grid-cols-1 gap-1 py-2 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Agente IA</dt>
@@ -65,30 +80,45 @@ export function GrammarToast() {
                         <dd className="text-gray-700 sm:col-span-2">{text}</dd>
                     </div>
                     <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                        <dt className="font-medium text-gray-900">Bio</dt>
+                        <dt className="font-medium text-gray-900">Texto corregido</dt>
                         <dd className="text-gray-700 sm:col-span-2">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis
-                            debitis explicabo doloremque impedit nesciunt dolorem facere, dolor
-                            quasi veritatis quia fugit aperiam aspernatur neque molestiae labore
-                            aliquam soluta architecto??!
+                            {corrected}
                         </dd>
                     </div>
                     <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Observaciones</dt>
                         <dd className="text-gray-700 sm:col-span-2">
-                            Tu texto contenia varios errores gramáticales. Por ejemplo, escribiste "Dinozaurio" con Z, mientras que Dinosaurio lleva S.
+                            {observations}
                         </dd>
                     </div>
                 </dl>
                 <div className="text-center mt-15">
-                    <Link href="/ai" prefetch={false}>
-                        <DefaultButton message="Volver" /> 
-                    </Link>
-                   
+
+                    <DefaultButton message="Volver" click={onBack} />
+
                 </div>
-                
+
             </div>
-            
+
         </main>
+    )
+}
+
+export function LoadingPage() {
+    return (
+        <div className="flex flex-col items-center justify-center h-screen gap-y-10">
+            <h1 className={`${ubuntu.className} text-6xl text-center`}>Haciendo cosas de IA...</h1>
+            <p>Tiempo estimado de espera: <span className="font-bold text-green-600">10 segundos</span></p>
+            
+            <div className="loading">
+                <div className="loading-box">
+                    <div className="WH color l1"></div>
+                    <div className="ball color"></div>
+                    <div className="WH color l2"></div>
+                </div>
+            </div>
+            <p className={`${nunito.className} text-gray-500`}>¿Sabias que...? La IA no imita al cerebro humano... pero se inspira en él. Aunque se dice que la IA “aprende sola”, en realidad depende de algo fundamental: los datos.</p>
+
+        </div>
     )
 }
