@@ -14,6 +14,7 @@ export default function AuthPage() {
            if (!operation) {
              throw new Error("No se ha podido registrar al usuario")
            }
+           
         } catch(error) {
             console.error(error)
             return
