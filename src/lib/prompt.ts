@@ -1,5 +1,3 @@
-import { encode } from "@toon-format/toon";
-
 export const finalPrompt = {
       system: `
         Eres un experto corrector gramatical y de estilo para la lengua española.
