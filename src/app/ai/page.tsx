@@ -95,11 +95,11 @@ export function GrammarToast({ onBack, text, corrected, observations }: { onBack
                     </div>
                     <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Tu texto</dt>
-                        <dd className="text-gray-700 sm:col-span-2">{text}</dd>
+                        <dd className="text-red-700 sm:col-span-2">{text}</dd>
                     </div>
                     <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Texto corregido</dt>
-                        <dd className="text-gray-700 sm:col-span-2">
+                        <dd className="text-green-700 sm:col-span-2">
                             {corrected}
                         </dd>
                     </div>
