@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { encode } from '@toon-format/toon'
 import { google } from "@ai-sdk/google";
-import { generateText } from "ai";
+import { generateText, zodSchema } from "ai";
 import type { NextRequest } from "next/server";
 import Prompt from "@/schema/prompt.schema";
+import sanitizeHtml from "sanitize-html";
+import finalPrompt from "@/lib/prompt";
 
 /* TO DO
 1. Git branch or make a v2 API endpoint with text streaming
@@ -11,13 +12,20 @@ import Prompt from "@/schema/prompt.schema";
 */
 export async function POST(req: NextRequest) {
     try {
-        const { prompt }:Prompt = await req.json();
-        /*const { text } = await generateText({
+        const { prompt }: Prompt = await req.json();
+        if (!prompt || prompt.trim() === '' ) {
+            return NextResponse.json({
+                error: "El prompt está vacio"
+            }, { status: 400 })
+        }
+        let userPrompt = sanitizeHtml(prompt, { allowedAttributes: {}, allowedTags: [] })
+
+        const { text } = await generateText({
             model: google('gemini-2.5-pro'),
-            prompt: "¿5 + 5?"
-        })*/
+            prompt: `${finalPrompt.system} ${finalPrompt.user(userPrompt)}`
+        })
         return NextResponse.json({
-            response: encode(prompt)
+            response: text
         })
     } catch (error) {
         console.error("Error en la ruta /api/service:", error);
