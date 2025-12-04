@@ -27,7 +27,12 @@ export default function AiPage() {
             if (!response.ok) {
                 throw new Error(`El servicio de IA respondió con un error: ${response.status}`);
             }
-            setInfo(data)
+            for (const key in data) {
+                if (key === 'response') {
+                    
+                }
+            }
+            setInfo(data.response)
             setLoading(false)
             setRenderResult(true)
 
@@ -43,7 +48,7 @@ export default function AiPage() {
 
     if (renderResult) {
         return (
-            <GrammarToast text={message} corrected={info.response} observations="Ninguna." onBack={() => setRenderResult(false)} />
+            <GrammarToast text={message} corrected={info.corrected} observations={info.observations} onBack={() => setRenderResult(false)} />
         )
     }
     if (loading) {
