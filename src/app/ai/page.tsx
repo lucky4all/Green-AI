@@ -2,29 +2,41 @@
 import { AIButton, DefaultButton } from "@/components/buttons"
 import { geist, montserrat, raleway, ubuntu, nunito } from "@/lib/fonts"
 import text from "@/utils/example-test"
-import { useState } from "react"
-import { MouseEventHandler } from "react"
+import { useState, MouseEventHandler } from "react"
+import { z, ZodError } from 'zod'
 
 export default function AiPage() {
 
     const [message, setMessage] = useState('');
     const [renderResult, setRenderResult] = useState(false);
-    const [info, setInfo] = useState<any>(null)
-    const [loading, setLoading] = useState(false)
-    const handleClick = async (): Promise<Object | void> => {
+    const [info, setInfo] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
+    const [clientError, renderClientError] = useState(false);
+
+    const messageDto = { message: message }
+    const MessageSchema = z.object({
+        message: z.string().nonempty("El mensaje no puede estar vacio.")
+    })
+
+    const handleClick = async (): Promise<void> => {
         try {
+            MessageSchema.parse(messageDto)
             setLoading(true)
             let response = await fetch("/api/service", { method: "POST", body: JSON.stringify({ prompt: message }), headers: { "Content-Type": "application/json" } })
             let data = await response.json()
             if (!response.ok) {
-                throw new Error
+                throw new Error(`El servicio de IA respondió con un error: ${response.status}`);
             }
             setInfo(data)
             setLoading(false)
             setRenderResult(true)
 
         } catch (error) {
+            setLoading(false)
             console.error("Error al conectar con el servicio de IA", error)
+            if (error instanceof ZodError) {
+                renderClientError(true)
+            }
             return
         }
     }
@@ -39,17 +51,18 @@ export default function AiPage() {
             <LoadingPage />
         )
     }
-    
+
     return (
         <>
             <main className="flex flex-col items-center justify-center mt-[25vh]">
-                <h1 className={`${geist.className} text-4xl mb-[10vh] animate-pulsing animate-duration-slower animate-delay-500`}>Escribe tu texto a continuación y deja que nuestra inteligencia artificial lo corrija.</h1>
+                <h2 className={`${geist.className} text-4xl m-[5vh] animate-pulsing animate-duration-slower animate-delay-500`}>Escribe tu texto a continuación y deja que nuestra inteligencia artificial lo corrija.</h2>
 
                 <section className="flex">
                     <div className="input">
 
                         <div className="flex flex-col items-center justify-center h-full gap-y-4">
                             <textarea onChange={(e) => setMessage(e.target.value)} maxLength={500} className="search" placeholder={text} />
+                                { clientError && <p className="text-red-500 font-bold">No puedes enviar un texto vacio.</p>  }
                             <AIButton onClick={handleClick} message="Corregir" />
                         </div>
 
