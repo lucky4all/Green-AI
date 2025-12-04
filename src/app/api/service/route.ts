@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import { google } from "@ai-sdk/google";
-import { generateText } from "ai";
+import { generateObject } from "ai";
 import type { NextRequest } from "next/server";
 import Prompt from "@/schema/prompt.schema";
 import sanitizeHtml from "sanitize-html";
 import finalPrompt from "@/lib/prompt";
+import { z } from "zod";    
+
+const PromptSchema = z.object({
+    corrected: z.string(),
+    observations: z.array(z.string())
+})
 
 export async function POST(req: NextRequest) {
     try {
@@ -16,12 +22,13 @@ export async function POST(req: NextRequest) {
         }
         let userPrompt = sanitizeHtml(prompt, { allowedAttributes: {}, allowedTags: [] })
        
-        const { text } = await generateText({
+        const { object } = await generateObject({
             model: google('gemini-2.5-pro'),
+            schema: PromptSchema,
             prompt: `${finalPrompt.system} ${finalPrompt.user(userPrompt)}`
         })
         return NextResponse.json({
-            response: text
+            response: object
         })
     } catch (error) {
         console.error("Error en la ruta /api/service:", error);
