@@ -27,11 +27,7 @@ export default function AiPage() {
             if (!response.ok) {
                 throw new Error(`El servicio de IA respondió con un error: ${response.status}`);
             }
-            for (const key in data) {
-                if (key === 'response') {
-                    
-                }
-            }
+            
             setInfo(data.response)
             setLoading(false)
             setRenderResult(true)
