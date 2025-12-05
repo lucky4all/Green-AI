@@ -34,9 +34,9 @@ export async function POST(req: NextRequest) {
             schema: PromptSchema,
             prompt: `${finalPrompt.system} ${finalPrompt.user(userPrompt)}`
         })
-        if (!object) {
-            throw new ExternalAiError("La IA no ha respondido")
-        }
+        
+        if (!object) throw new ExternalAiError("La IA no ha respondido")
+
         return NextResponse.json({
             response: object
         })
