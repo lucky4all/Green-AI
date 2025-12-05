@@ -13,10 +13,11 @@ export default function NavBar() {
     function redirectToBlog() {
         route.push("/blog")
     }
+    
     return (
-        <>
-            <nav className="bg-green-500 w-screen h-max py-5">
-                <ul className="flex flex-row items-center justify-between text-white gap-0">
+        <>  { /* Agregar diseño responsive */}
+            <nav className="bg-green-500 w-screen h-max py-5 sm">
+                <ul className="flex flex-row items-center justify-between text-white gap-0 xl:gap-10 px-4 xl:px-20 lg:px-10 md:px-6 sm:px-4 xs:px-2 flex-wrap flex-1">
                     <h2 className={`${raleway.className} ml-1 gradient-title text-3xl`}>Green AI |</h2>
                     <li onClick={redirectToHome} className="list">Inicio</li>
                     <li onClick={redirectToAi} className="list">Corregir</li>
