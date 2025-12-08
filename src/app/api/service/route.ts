@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         let userPrompt = sanitizeHtml(prompt, { allowedAttributes: {}, allowedTags: [] })
        
         const { object } = await generateObject({
-            model: google('gemini-2.5-pro'),
+            model: google('gemini-2.5-flash'),
             schema: PromptSchema,
             prompt: `${finalPrompt.system} ${finalPrompt.user(userPrompt)}`
         })
