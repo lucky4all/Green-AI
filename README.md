@@ -4,7 +4,7 @@
 
 **Green AI** es una **Plataforma web full-stack** diseñada para optimizar y formalizar textos en español, ideal para redactar documentos, emails o reportes de alta calidad.
 
-Este proyecto fue desarrollado utilizando el framework **Next.js** para el frontend y el backend (API Routes), aprovechando el **Server-Side Rendering (SSR)** para una alta eficiencia SEO y rendimiento. La corrección lingüística es impulsada por la **API de Gemini** (modelo Gemini-2.5 Pro), demostrando mis habilidades en **integración de APIs de Inteligencia Artificial** y desarrollo de aplicaciones web seguras de alto rendimiento.
+Este proyecto fue desarrollado utilizando el framework **Next.js** para el frontend y el backend (API Routes), aprovechando el **Server-Side Rendering (SSR)** para una alta eficiencia SEO y rendimiento. La corrección lingüística es impulsada por la **API de Gemini** (modelo Gemini-2.5 Flash), demostrando mis habilidades en **integración de APIs de Inteligencia Artificial** y desarrollo de aplicaciones web seguras de alto rendimiento.
 
 ---
 
