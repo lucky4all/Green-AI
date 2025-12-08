@@ -12,6 +12,6 @@ export default async function registerUser(payload: Payload) {
     const sanitize = sanitizeHtml(username, { allowedAttributes: {}, allowedTags: [] })
     payload.username = sanitize
     const token = jwt.signToken(payload)
-    let cookie = (await cookies()).set("authtoken", token, {  httpOnly: true, expires: date })
+    let cookie = (await cookies()).set("authtoken", token, {  httpOnly: true, expires: date, secure: true, sameSite: "strict" })
     return cookie ? true : false
 }
