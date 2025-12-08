@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: "El prompt está vacio"
             }, { status: 400 })
-        } else if (prompt.length >= 500) {
+        } else if (prompt.length > 500) {
             throw new ClientError("Prompt demasiado largo.")
         }
         let userPrompt = sanitizeHtml(prompt, { allowedAttributes: {}, allowedTags: [] })
