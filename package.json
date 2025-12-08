@@ -13,7 +13,6 @@
     "@ai-sdk/react": "^2.0.106",
     "@midudev/tailwind-animations": "^0.2.0",
     "@toon-format/toon": "^2.0.1",
-    "@vercel/blob": "^2.0.0",
     "@vercel/firewall": "^1.1.1",
     "ai": "^5.0.104",
     "jsonwebtoken": "^9.0.2",
