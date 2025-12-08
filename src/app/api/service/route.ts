@@ -9,7 +9,7 @@ import { z } from "zod";
 import { unauthorized } from "next/navigation";
 import { JWTService } from "@/lib/jwt";
 import { cookies } from "next/headers";
-import { UnauthorizedError, ExternalAiError } from "@/lib/customError";
+import { UnauthorizedError, ExternalAiError, ClientError } from "@/lib/customError";
 const PromptSchema = z.object({
     corrected: z.string(),
     observations: z.array(z.string())
@@ -26,6 +26,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 error: "El prompt está vacio"
             }, { status: 400 })
+        } else if (prompt.length >= 500) {
+            throw new ClientError("Prompt demasiado largo.")
         }
         let userPrompt = sanitizeHtml(prompt, { allowedAttributes: {}, allowedTags: [] })
        
@@ -48,6 +50,6 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "La IA no ha podido responder" }, { status: 500 })
         }
         console.error("Error en la ruta /api/service:", error);
-        return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
+        return NextResponse.json({ error: "Error interno del servidor", detalles: error }, { status: 500 });
     }
 }
