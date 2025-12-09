@@ -10,6 +10,7 @@ import { unauthorized } from "next/navigation";
 import { JWTService } from "@/lib/jwt";
 import { cookies } from "next/headers";
 import { UnauthorizedError, ExternalAiError, ClientError } from "@/lib/customError";
+import { checkRateLimit } from '@vercel/firewall'
 const PromptSchema = z.object({
     corrected: z.string(),
     observations: z.array(z.string())
@@ -17,6 +18,14 @@ const PromptSchema = z.object({
 
 export async function POST(req: NextRequest) {
     try {
+        const { rateLimited } = await checkRateLimit('api-rate-limit');
+        if (rateLimited) {
+            console.log("Rate limited!")
+            return NextResponse.json({
+                message: "Too many requests",
+                status: 429
+            }, { status: 429 })
+        }
         const jwt = new JWTService;
         const token:any = (await cookies()).get("authtoken");
         jwt.verifyToken(token)
