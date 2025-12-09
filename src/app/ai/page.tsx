@@ -87,7 +87,7 @@ export function GrammarToast({ onBack, text, corrected, observations }: { onBack
                 <dl className="divide-y divide-gray-200 text-sm">
                     <div className="grid grid-cols-1 gap-1 py-2 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Agente IA</dt>
-                        <dd className="text-gray-700 sm:col-span-2">Gemini 2.5 Pro</dd>
+                        <dd className="text-gray-700 sm:col-span-2">Gemini 2.5 Flash</dd>
                     </div>
                     <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                         <dt className="font-medium text-gray-900">Tu texto</dt>

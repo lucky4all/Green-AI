@@ -37,7 +37,7 @@ Este proyecto fue desarrollado utilizando el framework **Next.js** para el front
 
 
 
-* **Plataforma en vivo:** [https://awaiting]
+* **Plataforma en vivo:** [https://green-ai-rho.vercel.app/]
 * **Repositorio Público (GitHub):** Estás aquí.
 
 ---
