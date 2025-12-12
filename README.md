@@ -46,5 +46,5 @@ Este proyecto fue desarrollado utilizando el framework **Next.js** para el front
 
 Si encuentras algún error o tienes sugerencias de mejora, ¡no dudes en contactarme!
 
-* **Reporte de Errores/Sugerencias:** [Abrir una Issue en GitHub](URL de tu repositorio/issues)
+* **Reporte de Errores/Sugerencias:** [Abrir una Issue en GitHub](https://github.com/lucky4all/Green-AI/issues)
 * **Email:** lucasromerocoscia@gmail.com
