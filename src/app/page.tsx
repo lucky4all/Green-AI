@@ -19,9 +19,9 @@ export default function Home() {
             <DefaultButton message="Empezar" />
           </Link>
 
-          <Link href="/docs">
+          <a href="https://github.com/lucky4all/Green-AI" target="_blank" rel="noopener noreferrer">
             <DocsButton message="Documentación" />
-          </Link>
+          </a>
 
         </div>
 
