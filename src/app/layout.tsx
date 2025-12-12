@@ -9,10 +9,39 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.png",
   },
+  keywords: [
+    "corrector gramatical",
+    "IA",
+    "inteligencia artificial",
+    "corrección de textos",
+    "español",
+    "gramática",
+    "ortografía",
+    "redacción",
+    "herramienta de escritura",
+    "mejora de textos",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true
+    },
+  },
   openGraph: {
     type: "website",
     title: "Green AI - Corrector gramatical",
     description: "Corrige tus textos en español de manera rápida y precisa con Green AI, el corrector gramatical impulsado por inteligencia artificial.",
+    url: "https://green-ai-rho.vercel.app",
+    siteName: "Green AI",
+    images: [
+      {
+        url: "/favicon.png",
+        width: 800,
+        height: 600,
+      },
+    ],
   }
 };
 
